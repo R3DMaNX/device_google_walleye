@@ -1,5 +1,5 @@
 #
-# Copyright 2016 The Android Open Source Project
+# Copyright (C) 2017 The Android Open-Source Project
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -13,27 +13,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-
-PRODUCT_AAPT_CONFIG := normal
-PRODUCT_AAPT_PREF_CONFIG := xxhdpi
-PRODUCT_AAPT_PREBUILT_DPI := xxhdpi xhdpi hdpi
-
-PRODUCT_HARDWARE := walleye
-
-# DEVICE_PACKAGE_OVERLAYS for the device should be before
-# including common overlays since the one listed first
-# takes precedence.
-ifdef DEVICE_PACKAGE_OVERLAYS
-$(warning Overlays defined in '$(DEVICE_PACKAGE_OVERLAYS)' will override '$(PRODUCT_HARDWARE)' overlays)
-endif
-DEVICE_PACKAGE_OVERLAYS += device/google/walleye/overlay
-
-PRODUCT_PROPERTY_OVERRIDES += \
-    ro.sf.lcd_density=420
-
-# Enable Perfetto traced
-PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
-    persist.traced.enable=1
 
 LOCAL_PATH := device/google/walleye
 
@@ -90,6 +69,9 @@ endif
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/init-common.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/init-$(PRODUCT_HARDWARE).rc \
     $(LOCAL_PATH)/init.common.usb.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/hw/init.$(PRODUCT_HARDWARE).usb.rc \
+    $(LOCAL_PATH)/init.insmod.cfg:$(TARGET_COPY_OUT_VENDOR)/etc/init.insmod.cfg \
+    $(LOCAL_PATH)/init.insmod_charger.cfg:$(TARGET_COPY_OUT_VENDOR)/etc/init.insmod_charger.cfg
+
 
 # Input device files
 PRODUCT_COPY_FILES += \
@@ -98,7 +80,7 @@ PRODUCT_COPY_FILES += \
 include device/google/wahoo/device.mk
 
 PRODUCT_COPY_FILES += \
-    device/google/walleye/nfc/libnfc-nxp.walleye.conf:$(TARGET_COPY_OUT_VENDOR)/etc/libnfc-nxp.conf
+    device/google/walleye/nfc/libnfc-nxp.muskie.conf:$(TARGET_COPY_OUT_VENDOR)/etc/libnfc-nxp.conf
 
 PRODUCT_COPY_FILES += \
     device/google/walleye/thermal-engine.conf:$(TARGET_COPY_OUT_VENDOR)/etc/thermal-engine.conf \
@@ -115,3 +97,25 @@ PRODUCT_PROPERTY_OVERRIDES += \
 # NFC/camera interaction workaround - DO NOT COPY TO NEW DEVICES
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.camera.notify_nfc=1
+
+# Video calling prop
+PRODUCT_PROPERTY_OVERRIDES += \
+    persist.dbg.vt_avail_ovr=1
+
+# ModemService
+PRODUCT_COPY_FILES += \
+  device/google/walleye/modemservice.xml:system/etc/sysconfig/modemservice.xml
+  
+# ModemService Whitelist
+PRODUCT_COPY_FILES += \
+  device/google/walleye/whitelist_modemservice.xml:system/etc/sysconfig/whitelist_modemservice.xml
+  
+# Privileged app permissions
+PRODUCT_COPY_FILES += \
+    device/google/walleye/privapp-permissions-walleye.xml:system/etc/permissions/privapp-permissions-walleye.xml
+    
+# Telephony
+PRODUCT_PACKAGES += \
+    telephony-ext
+ PRODUCT_BOOT_JARS += \
+    telephony-ext
