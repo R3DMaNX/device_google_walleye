@@ -1,4 +1,4 @@
-# Copyright (C) 2017 AquariOS
+# Copyright (C) 2018 SiXROM
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -16,8 +16,8 @@
 TARGET_SCREEN_HEIGHT := 1920
 TARGET_SCREEN_WIDTH := 1080
 
-# Inherit some common Havoc stuff.
-$(call inherit-product, vendor/havoc/config/common.mk)
+# Inherit some common Six stuff.
+$(call inherit-product, vendor/six/config/common.mk)
 
 # Inherit from the common Open Source product configuration
 $(call inherit-product, $(SRC_TARGET_DIR)/product/aosp_base_telephony.mk)
@@ -37,7 +37,7 @@ PRODUCT_COPY_FILES += \
 -include vendor/ambientmusic/AmbientMusic.mk
 
 # Override AOSP build properties
-PRODUCT_NAME := havoc_walleye
+PRODUCT_NAME := sixrom_walleye
 PRODUCT_DEVICE := walleye
 PRODUCT_BRAND := Google
 PRODUCT_MODEL := Pixel 2
@@ -46,11 +46,9 @@ PRODUCT_MANUFACTURER := Google
 # Device Fingerprint
 PRODUCT_BUILD_PROP_OVERRIDES += \
     PRODUCT_NAME=walleye \
-    BUILD_FINGERPRINT=google/walleye/walleye:9/PQ1A.181105.017.A1/5081125:user/release-keys \
-    PRIVATE_BUILD_DESC="walleye-user 9 PQ1A.181105.017.A1 5081125 release-keys"
+    BUILD_FINGERPRINT=google/walleye/walleye:9/PQ1A.181205.002/5086253:user/release-keys \
+    PRIVATE_BUILD_DESC="walleye-user 9 PQ1A.181205.002 5086253 release-keys"
 
-    
 PRODUCT_COPY_FILES += \
     device/google/walleye/prebuilt/substratum_key_1.0.apk:system/app/substratum_key_1.0.apk
-
 
