@@ -15,4 +15,4 @@
 #
 
 PRODUCT_MAKEFILES := \
-    $(LOCAL_DIR)/sixrom_walleye.mk
+    $(LOCAL_DIR)/du_walleye.mk
